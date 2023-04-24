@@ -1,10 +1,10 @@
 import React from "react";
 
 function PizzaBlock({ imageUrl, title, types, sizes, price, category }) {
-  const typeNames = ["тонкое", "традиционное"];
   const [typeIndex, setTypeIndex] = React.useState(0);
-
   const [sizeIndex, setSizeIndex] = React.useState(0);
+
+  const typeNames = ["тонкое", "традиционное"];
 
   return (
     <div className="pizza-block">
@@ -25,7 +25,6 @@ function PizzaBlock({ imageUrl, title, types, sizes, price, category }) {
           })}
         </ul>
         <ul>
-          {/* <li className="active">26 см.</li> */}
           {sizes.map((el, i) => {
             return (
               <li
