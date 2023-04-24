@@ -15,7 +15,6 @@ function Categories() {
   return (
     <div className="categories">
       <ul>
-        {/* <li className="active">Все</li> */}
         {categories.map((type, i) => {
           return (
             <li

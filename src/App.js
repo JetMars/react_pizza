@@ -1,6 +1,7 @@
 import React from "react";
 
 import "./scss/app.scss";
+import pizzas from "./assets/db.json";
 
 import Header from "./components/Header";
 import Categories from "./components/Categories";
@@ -19,10 +20,9 @@ function App() {
           </div>
           <h2 className="content__title">Все пиццы</h2>
           <div className="content__items">
-            <PizzaBlock title="Маргарита" price={500} />
-            <PizzaBlock title="Милано" price={450} />
-            <PizzaBlock title="Гавайская" price={419} />
-            <PizzaBlock title="Пепперони" price={289} />
+            {pizzas.map((data) => (
+              <PizzaBlock key={data.id} {...data} />
+            ))}
           </div>
         </div>
       </div>
