@@ -19,7 +19,7 @@ function Home() {
   }, []);
 
   return (
-    <div className="container">
+    <>
       <div className="content__top">
         <Categories />
         <Sort />
@@ -30,7 +30,7 @@ function Home() {
           ? [...new Array(8)].map((_, i) => <Sceleton key={i} />)
           : data.map((data) => <PizzaBlock key={data.id} {...data} />)}
       </div>
-    </div>
+    </>
   );
 }
 
