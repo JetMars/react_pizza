@@ -1,20 +1,22 @@
 import React from "react";
 
 import { Link } from "react-router-dom";
-import imageLogo from "../assets/img/pizza-logo.svg";
+
+import style from "./Header.module.scss";
+import imageLogo from "../../assets/img/pizza-logo.svg";
 
 const Header = () => {
   return (
-    <div className="header">
-      <div className="container">
-        <Link to="/" className="header__logo">
+    <div className={style.header}>
+      <div className={style.container}>
+        <Link to="/" className={style.logo}>
           <img width="38" src={imageLogo} alt="Pizza logo" />
           <div>
             <h1>React Pizza</h1>
             <p>самая вкусная пицца во вселенной</p>
           </div>
         </Link>
-        <div className="header__cart">
+        <div className={style.cart}>
           <Link to="cart" className="button button--cart">
             <span>520 ₽</span>
             <div className="button__delimiter"></div>

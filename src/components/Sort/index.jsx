@@ -1,5 +1,7 @@
 import React from "react";
 
+import style from "./Sort.module.scss";
+
 function Sort() {
   const popupList = ["популярности", "цене", "алфавиту"];
 
@@ -14,8 +16,8 @@ function Sort() {
   }
 
   return (
-    <div className="sort">
-      <div className="sort__label">
+    <div className={style.sort}>
+      <div className={style.label}>
         <svg
           width="10"
           height="6"
@@ -32,14 +34,14 @@ function Sort() {
         <span onClick={() => setIsPopup(!isPopup)}>{popupSort}</span>
       </div>
       {isPopup && (
-        <div className="sort__popup">
+        <div className={style.popup}>
           <ul>
             {popupList.map((el, i) => {
               return (
                 <li
                   key={`${el}_${i}`}
                   onClick={() => onClickPopup(i)}
-                  className={popupIndex === i ? "active" : ""}
+                  className={popupIndex === i ? `${style.active}` : ""}
                 >
                   {el}
                 </li>

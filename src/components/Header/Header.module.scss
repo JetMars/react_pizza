@@ -1,4 +1,4 @@
-@import "../variables";
+@import "../../scss/variables";
 
 .header {
   border-bottom: 1px solid $gray-line;
@@ -8,9 +8,11 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    width: 90%;
+    margin: 0 auto;
   }
 
-  &__logo {
+  .logo {
     display: flex;
 
     img {
