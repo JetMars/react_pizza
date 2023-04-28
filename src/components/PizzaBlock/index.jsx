@@ -56,7 +56,7 @@ function PizzaBlock({ imageUrl, title, types, sizes, price, category }) {
             />
           </svg>
           <span>Добавить</span>
-          <i>2</i>
+          <i>0</i>
         </div>
       </div>
     </div>
