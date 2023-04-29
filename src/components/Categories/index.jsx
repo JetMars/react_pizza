@@ -2,9 +2,7 @@ import React from "react";
 
 import style from "./Categories.module.scss";
 
-function Categories() {
-  const [activeType, setActiveType] = React.useState(0);
-
+function Categories({ value, onChangeCategory }) {
   const categories = [
     "Все",
     "Мясные",
@@ -20,9 +18,9 @@ function Categories() {
         {categories.map((type, i) => {
           return (
             <li
-              onClick={() => setActiveType(i)}
+              onClick={() => onChangeCategory(i)}
               key={`${type}_${i}`}
-              className={activeType === i ? `${style.active}` : ""}
+              className={value === i ? `${style.active}` : ""}
             >
               {type}
             </li>

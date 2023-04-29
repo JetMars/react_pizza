@@ -8,21 +8,30 @@ import Sceleton from "../components/PizzaBlock/Sceleton";
 function Home() {
   const [data, setData] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
+  const [categoryType, setCategoryType] = React.useState(0);
 
   React.useEffect(() => {
-    fetch("https://6446573fee791e1e29fc6cd1.mockapi.io/items")
+    setIsLoading(true);
+    fetch(
+      `https://6446573fee791e1e29fc6cd1.mockapi.io/items?category=${
+        categoryType ? categoryType : ""
+      }`
+    )
       .then((resp) => resp.json())
       .then((json) => {
         setData(json);
         setIsLoading(false);
       });
-    window.scroll(0, 0);
-  }, []);
+    window.scrollTo(0, 0);
+  }, [categoryType]);
 
   return (
     <>
       <div className="content__top">
-        <Categories />
+        <Categories
+          value={categoryType}
+          onChangeCategory={(i) => setCategoryType(i)}
+        />
         <Sort />
       </div>
       <h2 className="content__title">Все пиццы</h2>
