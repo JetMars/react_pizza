@@ -9,13 +9,19 @@ function Home() {
   const [data, setData] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
   const [categoryType, setCategoryType] = React.useState(0);
+  const [sortType, setSortType] = React.useState({
+    name: "популярности (низ)",
+    sortProperty: "rating",
+  });
+
+  const category = categoryType ? categoryType : "";
+  const sortBy = sortType.sortProperty.replace("-", "");
+  const order = sortType.sortProperty.includes("-") ? "desc" : "asc";
 
   React.useEffect(() => {
     setIsLoading(true);
     fetch(
-      `https://6446573fee791e1e29fc6cd1.mockapi.io/items?category=${
-        categoryType ? categoryType : ""
-      }`
+      `https://6446573fee791e1e29fc6cd1.mockapi.io/items?category=${category}&sortBy=${sortBy}&order=${order}`
     )
       .then((resp) => resp.json())
       .then((json) => {
@@ -23,7 +29,7 @@ function Home() {
         setIsLoading(false);
       });
     window.scrollTo(0, 0);
-  }, [categoryType]);
+  }, [categoryType, sortType]);
 
   return (
     <>
@@ -32,7 +38,7 @@ function Home() {
           value={categoryType}
           onChangeCategory={(i) => setCategoryType(i)}
         />
-        <Sort />
+        <Sort value={sortType} onChangeSortType={(i) => setSortType(i)} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">

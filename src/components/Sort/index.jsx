@@ -2,17 +2,21 @@ import React from "react";
 
 import style from "./Sort.module.scss";
 
-function Sort() {
-  const popupList = ["популярности", "цене", "алфавиту"];
-
+function Sort({ value, onChangeSortType }) {
   const [isPopup, setIsPopup] = React.useState(false);
-  const [popupIndex, setPopupIndex] = React.useState(0);
 
-  const popupSort = popupList[popupIndex];
+  const popupList = [
+    { name: "популярности (низ)", sortProperty: "rating" },
+    { name: "популярности (выс)", sortProperty: "-rating" },
+    { name: "цене (низ)", sortProperty: "price" },
+    { name: "цене (выс)", sortProperty: "-price" },
+    { name: "алфавиту (низ)", sortProperty: "title" },
+    { name: "алфавиту (выс)", sortProperty: "-title" },
+  ];
 
-  function onClickPopup(i) {
-    setPopupIndex(i);
+  function onClickPopup(obj) {
     setIsPopup(false);
+    onChangeSortType(obj);
   }
 
   return (
@@ -31,19 +35,23 @@ function Sort() {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={() => setIsPopup(!isPopup)}>{popupSort}</span>
+        <span onClick={() => setIsPopup(!isPopup)}>{value.name}</span>
       </div>
       {isPopup && (
         <div className={style.popup}>
           <ul>
-            {popupList.map((el, i) => {
+            {popupList.map((obj, i) => {
               return (
                 <li
-                  key={`${el}_${i}`}
-                  onClick={() => onClickPopup(i)}
-                  className={popupIndex === i ? `${style.active}` : ""}
+                  key={`${obj.name}_${i}`}
+                  onClick={() => onClickPopup(obj)}
+                  className={
+                    value.sortProperty === obj.sortProperty
+                      ? `${style.active}`
+                      : ""
+                  }
                 >
-                  {el}
+                  {obj.name};
                 </li>
               );
             })}
