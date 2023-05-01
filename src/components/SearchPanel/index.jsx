@@ -16,12 +16,14 @@ function SearchPanel({ searchValue, setSearchValue }) {
         placeholder="Поиск пиццы....."
         onChange={(event) => setSearchValue(event.target.value)}
       />
-      <img
-        onClick={() => setSearchValue("")}
-        className={styles.closeIcon}
-        src={closeIcon}
-        alt="search-icon"
-      />
+      {searchValue && (
+        <img
+          onClick={() => setSearchValue("")}
+          className={styles.closeIcon}
+          src={closeIcon}
+          alt="search-icon"
+        />
+      )}
     </div>
   );
 }
