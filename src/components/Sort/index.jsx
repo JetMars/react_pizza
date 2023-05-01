@@ -1,6 +1,6 @@
 import React from "react";
 
-import style from "./Sort.module.scss";
+import styles from "./Sort.module.scss";
 
 function Sort({ value, onChangeSortType }) {
   const [isPopup, setIsPopup] = React.useState(false);
@@ -20,8 +20,8 @@ function Sort({ value, onChangeSortType }) {
   }
 
   return (
-    <div className={style.sort}>
-      <div className={style.label}>
+    <div className={styles.sort}>
+      <div className={styles.label}>
         <svg
           width="10"
           height="6"
@@ -38,7 +38,7 @@ function Sort({ value, onChangeSortType }) {
         <span onClick={() => setIsPopup(!isPopup)}>{value.name}</span>
       </div>
       {isPopup && (
-        <div className={style.popup}>
+        <div className={styles.popup}>
           <ul>
             {popupList.map((obj, i) => {
               return (
@@ -47,7 +47,7 @@ function Sort({ value, onChangeSortType }) {
                   onClick={() => onClickPopup(obj)}
                   className={
                     value.sortProperty === obj.sortProperty
-                      ? `${style.active}`
+                      ? `${styles.active}`
                       : ""
                   }
                 >

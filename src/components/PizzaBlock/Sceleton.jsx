@@ -1,12 +1,12 @@
 import React from "react";
 
-import style from "./PizzaBlock.module.scss";
+import styles from "./PizzaBlock.module.scss";
 
 import ContentLoader from "react-content-loader";
 
 const Sceleton = () => (
   <ContentLoader
-    className={style.pizza}
+    className={styles.pizza}
     speed={2}
     width={280}
     height={466}

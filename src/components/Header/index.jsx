@@ -2,21 +2,24 @@ import React from "react";
 
 import { Link } from "react-router-dom";
 
-import style from "./Header.module.scss";
+import styles from "./Header.module.scss";
 import imageLogo from "../../assets/img/pizza-logo.svg";
+
+import SearchPanel from "../SearchPanel/index";
 
 const Header = () => {
   return (
-    <div className={style.header}>
-      <div className={style.container}>
-        <Link to="/" className={style.logo}>
+    <div className={styles.header}>
+      <div className={styles.container}>
+        <Link to="/" className={styles.logo}>
           <img width="38" src={imageLogo} alt="Pizza logo" />
           <div>
             <h1>React Pizza</h1>
             <p>самая вкусная пицца во вселенной</p>
           </div>
         </Link>
-        <div className={style.cart}>
+        <SearchPanel />
+        <div className={styles.cart}>
           <Link to="cart" className="button button--cart">
             <span>520 ₽</span>
             <div className="button__delimiter"></div>

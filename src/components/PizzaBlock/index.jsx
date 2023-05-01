@@ -1,6 +1,6 @@
 import React from "react";
 
-import style from "./PizzaBlock.module.scss";
+import styles from "./PizzaBlock.module.scss";
 
 function PizzaBlock({ imageUrl, title, types, sizes, price, category }) {
   const [typeIndex, setTypeIndex] = React.useState(0);
@@ -9,17 +9,17 @@ function PizzaBlock({ imageUrl, title, types, sizes, price, category }) {
   const typeNames = ["тонкое", "традиционное"];
 
   return (
-    <div className={style.pizza}>
-      <img className={style.image} src={imageUrl} alt="Pizza" />
-      <h4 className={style.title}>{title}</h4>
-      <div className={style.selector}>
+    <div className={styles.pizza}>
+      <img className={styles.image} src={imageUrl} alt="Pizza" />
+      <h4 className={styles.title}>{title}</h4>
+      <div className={styles.selector}>
         <ul>
           {types.map((el, i) => {
             return (
               <li
                 key={`${el}_${i}`}
                 onClick={() => setTypeIndex(i)}
-                className={typeIndex === i ? `${style.active}` : ""}
+                className={typeIndex === i ? `${styles.active}` : ""}
               >
                 {typeNames[i]}
               </li>
@@ -32,7 +32,7 @@ function PizzaBlock({ imageUrl, title, types, sizes, price, category }) {
               <li
                 key={`${el}_${i}`}
                 onClick={() => setSizeIndex(i)}
-                className={sizeIndex === i ? `${style.active}` : ""}
+                className={sizeIndex === i ? `${styles.active}` : ""}
               >
                 {el}
               </li>
@@ -40,8 +40,8 @@ function PizzaBlock({ imageUrl, title, types, sizes, price, category }) {
           })}
         </ul>
       </div>
-      <div className={style.bottom}>
-        <div className={style.price}>от {price} ₽</div>
+      <div className={styles.bottom}>
+        <div className={styles.price}>от {price} ₽</div>
         <div className="button button--outline button--add">
           <svg
             width="12"

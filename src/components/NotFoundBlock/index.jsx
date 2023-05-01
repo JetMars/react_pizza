@@ -1,10 +1,10 @@
 import React from "react";
 
-import style from "./NotFoundBlock.module.scss";
+import styles from "./NotFoundBlock.module.scss";
 
 function NotFoundBlock() {
   return (
-    <div className={style.root}>
+    <div className={styles.root}>
       <span>😕</span>
       <h2>Нет такой страницы</h2>
     </div>

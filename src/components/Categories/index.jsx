@@ -1,6 +1,6 @@
 import React from "react";
 
-import style from "./Categories.module.scss";
+import styles from "./Categories.module.scss";
 
 function Categories({ value, onChangeCategory }) {
   const categories = [
@@ -13,14 +13,14 @@ function Categories({ value, onChangeCategory }) {
   ];
 
   return (
-    <div className={style.categories}>
+    <div className={styles.categories}>
       <ul>
         {categories.map((type, i) => {
           return (
             <li
               onClick={() => onChangeCategory(i)}
               key={`${type}_${i}`}
-              className={value === i ? `${style.active}` : ""}
+              className={value === i ? `${styles.active}` : ""}
             >
               {type}
             </li>
