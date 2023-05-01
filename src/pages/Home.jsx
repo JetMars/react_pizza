@@ -5,7 +5,7 @@ import Sort from "../components/Sort";
 import PizzaBlock from "../components/PizzaBlock";
 import Sceleton from "../components/PizzaBlock/Sceleton";
 
-function Home() {
+function Home({ searchValue }) {
   const [data, setData] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
   const [categoryType, setCategoryType] = React.useState(0);
@@ -14,14 +14,15 @@ function Home() {
     sortProperty: "rating",
   });
 
-  const category = categoryType ? categoryType : "";
+  const category = categoryType ? `category=${categoryType}` : "";
+  const search = searchValue ? `&search=${searchValue}` : "";
   const sortBy = sortType.sortProperty.replace("-", "");
   const order = sortType.sortProperty.includes("-") ? "desc" : "asc";
 
   React.useEffect(() => {
     setIsLoading(true);
     fetch(
-      `https://6446573fee791e1e29fc6cd1.mockapi.io/items?category=${category}&sortBy=${sortBy}&order=${order}`
+      `https://6446573fee791e1e29fc6cd1.mockapi.io/items?${category}&sortBy=${sortBy}&order=${order}${search}`
     )
       .then((resp) => resp.json())
       .then((json) => {
@@ -29,7 +30,7 @@ function Home() {
         setIsLoading(false);
       });
     window.scrollTo(0, 0);
-  }, [categoryType, sortType]);
+  }, [categoryType, sortType, searchValue]);
 
   return (
     <>

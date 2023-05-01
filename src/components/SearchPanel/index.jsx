@@ -2,16 +2,25 @@ import React from "react";
 
 import styles from "./SearchPanel.module.scss";
 
-import search from "../../assets/img/search-icon.svg";
+import searchIcon from "../../assets/img/search-icon.svg";
+import closeIcon from "../../assets/img/closeIcon.svg";
 
-function SearchPanel() {
+function SearchPanel({ searchValue, setSearchValue }) {
   return (
     <div className={styles.root}>
-      <img className={styles.search} src={search} alt="search-icon" />
+      <img className={styles.searchIcon} src={searchIcon} alt="search-icon" />
       <input
+        value={searchValue}
         className={styles.input}
         type="text"
-        placeholder="Введите что-нибудь"
+        placeholder="Поиск пиццы....."
+        onChange={(event) => setSearchValue(event.target.value)}
+      />
+      <img
+        onClick={() => setSearchValue("")}
+        className={styles.closeIcon}
+        src={closeIcon}
+        alt="search-icon"
       />
     </div>
   );
