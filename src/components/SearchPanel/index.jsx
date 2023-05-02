@@ -2,10 +2,14 @@ import React from "react";
 
 import styles from "./SearchPanel.module.scss";
 
+import { SearchContext } from "../../App";
+
 import searchIcon from "../../assets/img/search-icon.svg";
 import closeIcon from "../../assets/img/closeIcon.svg";
 
-function SearchPanel({ searchValue, setSearchValue }) {
+function SearchPanel() {
+  const { searchValue, setSearchValue } = React.useContext(SearchContext);
+
   return (
     <div className={styles.root}>
       <img className={styles.searchIcon} src={searchIcon} alt="search-icon" />

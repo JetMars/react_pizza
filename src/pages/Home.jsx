@@ -1,12 +1,15 @@
 import React from "react";
 
+import { SearchContext } from "../App";
+
 import Categories from "../components/Categories";
 import Sort from "../components/Sort";
 import PizzaBlock from "../components/PizzaBlock";
 import Sceleton from "../components/PizzaBlock/Sceleton";
 import PaginationPanel from "../components/PaginationPanel";
 
-function Home({ searchValue }) {
+function Home() {
+  const { searchValue } = React.useContext(SearchContext);
   const [data, setData] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
   const [categoryType, setCategoryType] = React.useState(0);
@@ -31,7 +34,6 @@ function Home({ searchValue }) {
         setData(json);
         setIsLoading(false);
       });
-    // window.scrollTo(0, 0);
   }, [categoryType, sortType, searchValue, currentPage]);
 
   return (

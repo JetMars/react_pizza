@@ -7,7 +7,7 @@ import imageLogo from "../../assets/img/pizza-logo.svg";
 
 import SearchPanel from "../SearchPanel/index";
 
-const Header = ({ searchValue, setSearchValue }) => {
+const Header = () => {
   return (
     <div className={styles.header}>
       <div className={styles.container}>
@@ -18,10 +18,7 @@ const Header = ({ searchValue, setSearchValue }) => {
             <p>самая вкусная пицца во вселенной</p>
           </div>
         </Link>
-        <SearchPanel
-          searchValue={searchValue}
-          setSearchValue={(value) => setSearchValue(value)}
-        />
+        <SearchPanel />
         <div className={styles.cart}>
           <Link to="cart" className="button button--cart">
             <span>520 ₽</span>
