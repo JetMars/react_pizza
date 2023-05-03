@@ -1,5 +1,7 @@
 import React from "react";
 
+import { useSelector, useDispatch } from "react-redux";
+
 import styles from "./Categories.module.scss";
 
 function Categories({ value, onChangeCategory }) {

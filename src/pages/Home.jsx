@@ -1,4 +1,6 @@
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setCategory } from "../redux/slices/filterSlice";
 
 import { SearchContext } from "../App";
 
@@ -9,41 +11,41 @@ import Sceleton from "../components/PizzaBlock/Sceleton";
 import PaginationPanel from "../components/PaginationPanel";
 
 function Home() {
+  const dispatch = useDispatch();
+
+  const { category, sort } = useSelector((state) => state.filter);
+
   const { searchValue } = React.useContext(SearchContext);
   const [data, setData] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
-  const [categoryType, setCategoryType] = React.useState(0);
   const [currentPage, setCurrentPage] = React.useState(1);
-  const [sortType, setSortType] = React.useState({
-    name: "популярности (низ)",
-    sortProperty: "rating",
-  });
 
-  const category = categoryType ? `&category=${categoryType}` : "";
+  const onChangeCategory = (id) => {
+    dispatch(setCategory(id));
+  };
+
+  const categoryType = category ? `&category=${category}` : "";
   const search = searchValue ? `&search=${searchValue}` : "";
-  const sortBy = sortType.sortProperty.replace("-", "");
-  const order = sortType.sortProperty.includes("-") ? "desc" : "asc";
+  const sortBy = sort.sortProperty.replace("-", "");
+  const order = sort.sortProperty.includes("-") ? "desc" : "asc";
 
   React.useEffect(() => {
     setIsLoading(true);
     fetch(
-      `https://6446573fee791e1e29fc6cd1.mockapi.io/items?page=${currentPage}&limit=6${category}&sortBy=${sortBy}&order=${order}${search}`
+      `https://6446573fee791e1e29fc6cd1.mockapi.io/items?page=${currentPage}&limit=6${categoryType}&sortBy=${sortBy}&order=${order}${search}`
     )
       .then((resp) => resp.json())
       .then((json) => {
         setData(json);
         setIsLoading(false);
       });
-  }, [categoryType, sortType, searchValue, currentPage]);
+  }, [category, sort, searchValue, currentPage]);
 
   return (
     <>
       <div className="content__top">
-        <Categories
-          value={categoryType}
-          onChangeCategory={(i) => setCategoryType(i)}
-        />
-        <Sort value={sortType} onChangeSortType={(i) => setSortType(i)} />
+        <Categories value={category} onChangeCategory={onChangeCategory} />
+        <Sort />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">

@@ -1,22 +1,27 @@
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setSort } from "../../redux/slices/filterSlice";
 
 import styles from "./Sort.module.scss";
 
-function Sort({ value, onChangeSortType }) {
+const popupList = [
+  { name: "популярности (низ)", sortProperty: "rating" },
+  { name: "популярности (выс)", sortProperty: "-rating" },
+  { name: "цене (низ)", sortProperty: "price" },
+  { name: "цене (выс)", sortProperty: "-price" },
+  { name: "алфавиту (низ)", sortProperty: "title" },
+  { name: "алфавиту (выс)", sortProperty: "-title" },
+];
+
+function Sort() {
+  const dispatch = useDispatch();
+  const sort = useSelector((state) => state.filter.sort);
+
   const [isPopup, setIsPopup] = React.useState(false);
 
-  const popupList = [
-    { name: "популярности (низ)", sortProperty: "rating" },
-    { name: "популярности (выс)", sortProperty: "-rating" },
-    { name: "цене (низ)", sortProperty: "price" },
-    { name: "цене (выс)", sortProperty: "-price" },
-    { name: "алфавиту (низ)", sortProperty: "title" },
-    { name: "алфавиту (выс)", sortProperty: "-title" },
-  ];
-
-  function onClickPopup(obj) {
+  function onChangeSort(obj) {
     setIsPopup(false);
-    onChangeSortType(obj);
+    dispatch(setSort(obj));
   }
 
   return (
@@ -35,7 +40,7 @@ function Sort({ value, onChangeSortType }) {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={() => setIsPopup(!isPopup)}>{value.name}</span>
+        <span onClick={() => setIsPopup(!isPopup)}>{sort.name}</span>
       </div>
       {isPopup && (
         <div className={styles.popup}>
@@ -44,9 +49,9 @@ function Sort({ value, onChangeSortType }) {
               return (
                 <li
                   key={`${obj.name}_${i}`}
-                  onClick={() => onClickPopup(obj)}
+                  onClick={() => onChangeSort(obj)}
                   className={
-                    value.sortProperty === obj.sortProperty
+                    sort.sortProperty === obj.sortProperty
                       ? `${styles.active}`
                       : ""
                   }
