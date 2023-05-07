@@ -12,7 +12,6 @@ import PaginationPanel from "../components/PaginationPanel";
 
 function Home() {
   const dispatch = useDispatch();
-
   const { category, sort } = useSelector((state) => state.filter);
 
   const { searchValue } = React.useContext(SearchContext);

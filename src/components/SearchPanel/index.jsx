@@ -10,10 +10,18 @@ import closeIcon from "../../assets/img/closeIcon.svg";
 function SearchPanel() {
   const { searchValue, setSearchValue } = React.useContext(SearchContext);
 
+  const inputRef = React.useRef("");
+
+  const changeSearchInput = (e) => {
+    setSearchValue("");
+    inputRef.current.focus();
+  };
+
   return (
     <div className={styles.root}>
       <img className={styles.searchIcon} src={searchIcon} alt="search-icon" />
       <input
+        ref={inputRef}
         value={searchValue}
         className={styles.input}
         type="text"
@@ -22,7 +30,7 @@ function SearchPanel() {
       />
       {searchValue && (
         <img
-          onClick={() => setSearchValue("")}
+          onClick={() => changeSearchInput()}
           className={styles.closeIcon}
           src={closeIcon}
           alt="search-icon"
