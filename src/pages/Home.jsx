@@ -1,4 +1,6 @@
 import React from "react";
+import axios from "axios";
+
 import { useSelector, useDispatch } from "react-redux";
 import { setCategory } from "../redux/slices/filterSlice";
 
@@ -30,14 +32,24 @@ function Home() {
 
   React.useEffect(() => {
     setIsLoading(true);
-    fetch(
-      `https://6446573fee791e1e29fc6cd1.mockapi.io/items?page=${currentPage}&limit=6${categoryType}&sortBy=${sortBy}&order=${order}${search}`
-    )
-      .then((resp) => resp.json())
+
+    axios
+      .get(
+        `https://6446573fee791e1e29fc6cd1.mockapi.io/items?page=${currentPage}&limit=6${categoryType}&sortBy=${sortBy}&order=${order}${search}`
+      )
+      .then((resp) => resp.data)
       .then((json) => {
         setData(json);
         setIsLoading(false);
       });
+    // fetch(
+    //   `https://6446573fee791e1e29fc6cd1.mockapi.io/items?page=${currentPage}&limit=6${categoryType}&sortBy=${sortBy}&order=${order}${search}`
+    // )
+    //   .then((resp) => resp.json())
+    //   .then((json) => {
+    //     setData(json);
+    //     setIsLoading(false);
+    //   });
   }, [category, sort, searchValue, currentPage]);
 
   return (
