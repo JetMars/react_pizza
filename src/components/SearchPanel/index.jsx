@@ -3,6 +3,8 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setInputSearch } from "../../redux/slices/filterSlice";
 
+import debounce from "lodash";
+
 import styles from "./SearchPanel.module.scss";
 
 import searchIcon from "../../assets/img/search-icon.svg";
@@ -18,6 +20,8 @@ function SearchPanel() {
     dispatch(setInputSearch(""));
     inputRef.current.focus();
   };
+
+  console.log(debounce);
 
   return (
     <div className={styles.root}>

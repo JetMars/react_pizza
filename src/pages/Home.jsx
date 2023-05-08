@@ -30,7 +30,6 @@ function Home() {
 
   React.useEffect(() => {
     setIsLoading(true);
-
     axios
       .get(
         `https://6446573fee791e1e29fc6cd1.mockapi.io/items?page=${currentPage}&limit=6${categoryType}&sortBy=${sortBy}&order=${order}${search}`
