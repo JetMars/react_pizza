@@ -14,12 +14,11 @@ import PaginationPanel from "../components/PaginationPanel";
 
 function Home() {
   const dispatch = useDispatch();
-  const { category, sort } = useSelector((state) => state.filter);
+  const { category, sort, currentPage } = useSelector((state) => state.filter);
 
   const { searchValue } = React.useContext(SearchContext);
   const [data, setData] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
-  const [currentPage, setCurrentPage] = React.useState(1);
 
   const onChangeCategory = (id) => {
     dispatch(setCategory(id));
@@ -42,14 +41,6 @@ function Home() {
         setData(json);
         setIsLoading(false);
       });
-    // fetch(
-    //   `https://6446573fee791e1e29fc6cd1.mockapi.io/items?page=${currentPage}&limit=6${categoryType}&sortBy=${sortBy}&order=${order}${search}`
-    // )
-    //   .then((resp) => resp.json())
-    //   .then((json) => {
-    //     setData(json);
-    //     setIsLoading(false);
-    //   });
   }, [category, sort, searchValue, currentPage]);
 
   return (
@@ -64,7 +55,7 @@ function Home() {
           ? [...new Array(8)].map((_, i) => <Sceleton key={i} />)
           : data.map((data) => <PizzaBlock key={data.id} {...data} />)}
       </div>
-      <PaginationPanel onChangePage={(number) => setCurrentPage(number)} />
+      <PaginationPanel />
     </>
   );
 }
