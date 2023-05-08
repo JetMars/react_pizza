@@ -4,8 +4,6 @@ import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { setCategory } from "../redux/slices/filterSlice";
 
-import { SearchContext } from "../App";
-
 import Categories from "../components/Categories";
 import Sort from "../components/Sort";
 import PizzaBlock from "../components/PizzaBlock";
@@ -14,9 +12,10 @@ import PaginationPanel from "../components/PaginationPanel";
 
 function Home() {
   const dispatch = useDispatch();
-  const { category, sort, currentPage } = useSelector((state) => state.filter);
+  const { category, sort, currentPage, inputSearch } = useSelector(
+    (state) => state.filter
+  );
 
-  const { searchValue } = React.useContext(SearchContext);
   const [data, setData] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
 
@@ -25,7 +24,7 @@ function Home() {
   };
 
   const categoryType = category ? `&category=${category}` : "";
-  const search = searchValue ? `&search=${searchValue}` : "";
+  const search = inputSearch ? `&search=${inputSearch}` : "";
   const sortBy = sort.sortProperty.replace("-", "");
   const order = sort.sortProperty.includes("-") ? "desc" : "asc";
 
@@ -41,7 +40,7 @@ function Home() {
         setData(json);
         setIsLoading(false);
       });
-  }, [category, sort, searchValue, currentPage]);
+  }, [category, sort, inputSearch, currentPage]);
 
   return (
     <>
