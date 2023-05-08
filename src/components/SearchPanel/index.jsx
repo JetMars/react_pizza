@@ -1,9 +1,9 @@
 import React from "react";
 
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setInputSearch } from "../../redux/slices/filterSlice";
 
-import debounce from "lodash";
+import debounce from "lodash.debounce";
 
 import styles from "./SearchPanel.module.scss";
 
@@ -12,29 +12,40 @@ import closeIcon from "../../assets/img/closeIcon.svg";
 
 function SearchPanel() {
   const dispatch = useDispatch();
-  const inputSearch = useSelector((state) => state.filter.inputSearch);
 
+  const [value, setValue] = React.useState("");
   const inputRef = React.useRef("");
 
-  const changeSearchInput = (e) => {
+  const changeSearchInput = () => {
     dispatch(setInputSearch(""));
+    setValue("");
     inputRef.current.focus();
   };
 
-  console.log(debounce);
+  const updateChangeInput = React.useCallback(
+    debounce((value) => {
+      dispatch(setInputSearch(value));
+    }, 350),
+    []
+  );
+
+  const onChangeInput = (event) => {
+    setValue(event.target.value);
+    updateChangeInput(value);
+  };
 
   return (
     <div className={styles.root}>
       <img className={styles.searchIcon} src={searchIcon} alt="search-icon" />
       <input
         ref={inputRef}
-        value={inputSearch}
+        value={value}
         className={styles.input}
         type="text"
         placeholder="Поиск пиццы....."
-        onChange={(event) => dispatch(setInputSearch(event.target.value))}
+        onChange={(event) => onChangeInput(event)}
       />
-      {inputSearch && (
+      {value && (
         <img
           onClick={() => changeSearchInput()}
           className={styles.closeIcon}
