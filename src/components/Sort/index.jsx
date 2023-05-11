@@ -18,14 +18,27 @@ function Sort() {
   const sort = useSelector((state) => state.filter.sort);
 
   const [isPopup, setIsPopup] = React.useState(false);
+  const popup = React.useRef();
 
   function onChangeSort(obj) {
     setIsPopup(false);
     dispatch(setSort(obj));
   }
 
+  React.useEffect(() => {
+    const handleClick = (e) => {
+      const path = e.composedPath();
+      if (!path.includes(popup.current)) {
+        setIsPopup(false);
+      }
+    };
+    document.body.addEventListener("click", handleClick);
+
+    return () => document.body.removeEventListener("click", handleClick);
+  }, []);
+
   return (
-    <div className={styles.sort}>
+    <div ref={popup} className={styles.sort}>
       <div className={styles.label}>
         <svg
           width="10"
