@@ -1,12 +1,28 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { addItem } from "../../redux/slices/cartSlice";
 
 import styles from "./PizzaBlock.module.scss";
 
-function PizzaBlock({ imageUrl, title, types, sizes, price, category }) {
+function PizzaBlock({ id, imageUrl, title, types, sizes, price, category }) {
+  const dispath = useDispatch();
+
   const [typeIndex, setTypeIndex] = React.useState(0);
   const [sizeIndex, setSizeIndex] = React.useState(0);
 
   const typeNames = ["тонкое", "традиционное"];
+
+  const onAddItem = () => {
+    const item = {
+      id,
+      title,
+      price,
+      imageUrl,
+      types: typeNames[typeIndex],
+      sizes: sizes[sizeIndex],
+    };
+    dispath(addItem(item));
+  };
 
   return (
     <div className={styles.pizza}>
@@ -42,7 +58,10 @@ function PizzaBlock({ imageUrl, title, types, sizes, price, category }) {
       </div>
       <div className={styles.bottom}>
         <div className={styles.price}>от {price} ₽</div>
-        <div className="button button--outline button--add">
+        <button
+          onClick={onAddItem}
+          className="button button--outline button--add"
+        >
           <svg
             width="12"
             height="12"
@@ -57,7 +76,7 @@ function PizzaBlock({ imageUrl, title, types, sizes, price, category }) {
           </svg>
           <span>Добавить</span>
           <i>0</i>
-        </div>
+        </button>
       </div>
     </div>
   );
