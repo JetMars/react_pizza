@@ -25,13 +25,13 @@ function SearchPanel() {
   const updateChangeInput = React.useCallback(
     debounce((value) => {
       dispatch(setInputSearch(value));
-    }, 350),
+    }, 250),
     []
   );
 
   const onChangeInput = (event) => {
     setValue(event.target.value);
-    updateChangeInput(value);
+    updateChangeInput(event.target.value);
   };
 
   return (
