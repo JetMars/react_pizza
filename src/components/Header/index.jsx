@@ -59,7 +59,7 @@ const Header = () => {
                 strokeLinejoin="round"
               />
             </svg>
-            <span>{totalCount}</span>
+            <span>{totalCount ? totalCount : ""}</span>
           </Link>
         </div>
       </div>
