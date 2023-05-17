@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { setInputSearch } from "../../redux/slices/filterSlice";
 
 import debounce from "lodash.debounce";
@@ -12,6 +12,8 @@ import closeIcon from "../../assets/img/closeIcon.svg";
 
 function SearchPanel() {
   const dispatch = useDispatch();
+  const { inputSearch } = useSelector((state) => state.filter);
+  console.log(inputSearch);
 
   const [value, setValue] = React.useState("");
   const inputRef = React.useRef("");

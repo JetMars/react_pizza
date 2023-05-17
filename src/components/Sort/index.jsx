@@ -4,7 +4,7 @@ import { setSort } from "../../redux/slices/filterSlice";
 
 import styles from "./Sort.module.scss";
 
-const popupList = [
+export const popupList = [
   { name: "популярности (низ)", sortProperty: "rating" },
   { name: "популярности (выс)", sortProperty: "-rating" },
   { name: "цене (низ)", sortProperty: "price" },

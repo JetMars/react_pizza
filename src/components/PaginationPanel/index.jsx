@@ -1,13 +1,14 @@
 import React from "react";
 import ReactPaginate from "react-paginate";
 
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { setCurrentPage } from "../../redux/slices/filterSlice";
 
 import styles from "./PaginationPanel.module.scss";
 
 function PaginationPanel() {
   const dispatch = useDispatch();
+  const page = useSelector((state) => state.filter.currentPage);
   const onChangePage = (event) => {
     dispatch(setCurrentPage(event.selected + 1));
   };
@@ -21,6 +22,7 @@ function PaginationPanel() {
       pageCount={2}
       previousLabel="<"
       renderOnZeroPageCount={null}
+      forcePage={page - 1}
     />
   );
 }
