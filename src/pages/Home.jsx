@@ -1,26 +1,27 @@
 import React from "react";
-import axios from "axios";
 import qs from "qs";
 import { useNavigate } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
 import { setCategory, setFilters } from "../redux/slices/filterSlice";
+import { fetchPizzas } from "../redux/slices/pizzaSlice";
 
 import Categories from "../components/Categories";
 import Sort, { popupList } from "../components/Sort";
 import PizzaBlock from "../components/PizzaBlock";
 import Sceleton from "../components/PizzaBlock/Sceleton";
 import PaginationPanel from "../components/PaginationPanel";
+import NotFoundPizza from "../components/NotFoundPizza";
 
 function Home() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const { data, status } = useSelector((state) => state.pizza);
   const { category, sort, currentPage, inputSearch } = useSelector(
     (state) => state.filter
   );
 
-  const [data, setData] = React.useState([]);
-  const [isLoading, setIsLoading] = React.useState(false);
   const isSearch = React.useRef(false);
   const isMounted = React.useRef(false);
 
@@ -28,25 +29,14 @@ function Home() {
     dispatch(setCategory(id));
   };
 
-  const fetchPizzas = () => {
-    setIsLoading(true);
-
+  const getPizzas = () => {
     const categoryType = category ? `&category=${category}` : "";
     const search = inputSearch ? `&search=${inputSearch}` : "";
     const sortBy = sort.sortProperty.replace("-", "");
     const order = sort.sortProperty.includes("-") ? "desc" : "asc";
 
-    axios
-      .get(
-        `https://6446573fee791e1e29fc6cd1.mockapi.io/items?page=${currentPage}&limit=6${categoryType}&sortBy=${sortBy}&order=${order}${search}`
-      )
-      .then((resp) => resp.data)
-      .then((json) => {
-        setData(json);
-        setIsLoading(false);
-      });
+    dispatch(fetchPizzas({ categoryType, search, sortBy, order, currentPage }));
   };
-
   React.useEffect(() => {
     if (isMounted.current) {
       const url = qs.stringify({
@@ -80,7 +70,7 @@ function Home() {
 
   React.useEffect(() => {
     if (!isSearch.current) {
-      fetchPizzas();
+      getPizzas();
     }
 
     isSearch.current = false;
@@ -94,9 +84,13 @@ function Home() {
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
-        {isLoading
-          ? [...new Array(8)].map((_, i) => <Sceleton key={i} />)
-          : data.map((data) => <PizzaBlock key={data.id} {...data} />)}
+        {status === "error" ? (
+          <NotFoundPizza />
+        ) : status !== "success" ? (
+          [...new Array(8)].map((_, i) => <Sceleton key={i} />)
+        ) : (
+          data.map((data) => <PizzaBlock key={data.id} {...data} />)
+        )}
       </div>
       <PaginationPanel />
     </>

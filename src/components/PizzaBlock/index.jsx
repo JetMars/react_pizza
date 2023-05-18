@@ -1,12 +1,12 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { addItem } from "../../redux/slices/cartSlice";
+import { addItem, selectCart } from "../../redux/slices/cartSlice";
 
 import styles from "./PizzaBlock.module.scss";
 
 function PizzaBlock({ id, imageUrl, title, types, sizes, price, category }) {
   const dispath = useDispatch();
-  const { items } = useSelector((state) => state.cart);
+  const { items } = useSelector(selectCart);
 
   const [typeIndex, setTypeIndex] = React.useState(0);
   const [sizeIndex, setSizeIndex] = React.useState(0);

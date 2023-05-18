@@ -1,7 +1,7 @@
 import React from "react";
 
 import { useSelector, useDispatch } from "react-redux";
-import { deleteItems } from "../redux/slices/cartSlice";
+import { deleteItems, selectCart } from "../redux/slices/cartSlice";
 
 import { Link } from "react-router-dom";
 import CartItem from "../components/CartItem";
@@ -10,7 +10,7 @@ import imageEmptyCart from "../assets/img/empty-cart.png";
 
 function Cart() {
   const dispatch = useDispatch();
-  const { items, totalPrice } = useSelector((state) => state.cart);
+  const { items, totalPrice } = useSelector(selectCart);
   const totalCount = items.reduce(
     (counter, item) => (counter += item.count),
     0

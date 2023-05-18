@@ -7,9 +7,10 @@ import styles from "./Header.module.scss";
 import imageLogo from "../../assets/img/pizza-logo.svg";
 
 import SearchPanel from "../SearchPanel/index";
+import { selectCart } from "../../redux/slices/cartSlice";
 
 const Header = () => {
-  const { items, totalPrice } = useSelector((state) => state.cart);
+  const { items, totalPrice } = useSelector(selectCart);
   const totalCount = items.reduce(
     (counter, item) => (counter += item.count),
     0
