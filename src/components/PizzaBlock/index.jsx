@@ -2,9 +2,11 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addItem, selectCart } from "../../redux/slices/cartSlice";
 
+import { Link } from "react-router-dom";
+
 import styles from "./PizzaBlock.module.scss";
 
-function PizzaBlock({ id, imageUrl, title, types, sizes, price, category }) {
+function PizzaBlock({ id, imageUrl, title, types, sizes, price }) {
   const dispath = useDispatch();
   const { items } = useSelector(selectCart);
 
@@ -29,8 +31,10 @@ function PizzaBlock({ id, imageUrl, title, types, sizes, price, category }) {
 
   return (
     <div className={styles.pizza}>
-      <img className={styles.image} src={imageUrl} alt="Pizza" />
-      <h4 className={styles.title}>{title}</h4>
+      <Link to={`/pizza/${id}`}>
+        <img className={styles.image} src={imageUrl} alt="Pizza" />
+        <h4 className={styles.title}>{title}</h4>
+      </Link>
       <div className={styles.selector}>
         <ul>
           {types.map((el, i) => {
