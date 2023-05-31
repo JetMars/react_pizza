@@ -4,7 +4,7 @@ import styles from "./PizzaBlock.module.scss";
 
 import ContentLoader from "react-content-loader";
 
-const Sceleton = () => (
+const Sceleton: React.FC = () => (
   <ContentLoader
     className={styles.pizza}
     speed={2}

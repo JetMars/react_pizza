@@ -8,11 +8,11 @@ import CartItem from "../components/CartItem";
 
 import imageEmptyCart from "../assets/img/empty-cart.png";
 
-function Cart() {
+const Cart: React.FC = () => {
   const dispatch = useDispatch();
   const { items, totalPrice } = useSelector(selectCart);
   const totalCount = items.reduce(
-    (counter, item) => (counter += item.count),
+    (counter: number, item) => (counter += item.count),
     0
   );
 
@@ -117,7 +117,7 @@ function Cart() {
           </div>
         </div>
         <div className="content__items_cart">
-          {items.map((item) => {
+          {items.map((item: any) => {
             return <CartItem key={item.id} {...item} />;
           })}
         </div>
@@ -160,6 +160,6 @@ function Cart() {
       </div>
     </div>
   );
-}
+};
 
 export default Cart;

@@ -2,7 +2,7 @@ import React from "react";
 
 import styles from "./NotFoundPizza.module.scss";
 
-function NotFoundPizza() {
+const NotFoundPizza: React.FC = () => {
   return (
     <div className={styles.root}>
       <span>😕</span>
@@ -10,6 +10,6 @@ function NotFoundPizza() {
       <p className={styles.text}>Попробуйте зайти позже</p>
     </div>
   );
-}
+};
 
 export default NotFoundPizza;

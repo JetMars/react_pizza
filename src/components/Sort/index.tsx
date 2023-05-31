@@ -3,8 +3,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { setSort } from "../../redux/slices/filterSlice";
 
 import styles from "./Sort.module.scss";
+import { RootState } from "../../redux/store";
 
-export const popupList = [
+type SortItem = {
+  name: string;
+  sortProperty: string;
+};
+
+export const popupList: SortItem[] = [
   { name: "популярности (низ)", sortProperty: "rating" },
   { name: "популярности (выс)", sortProperty: "-rating" },
   { name: "цене (низ)", sortProperty: "price" },
@@ -15,19 +21,19 @@ export const popupList = [
 
 function Sort() {
   const dispatch = useDispatch();
-  const sort = useSelector((state) => state.filter.sort);
+  const sort = useSelector((state: RootState) => state.filter.sort);
 
-  const [isPopup, setIsPopup] = React.useState(false);
-  const popup = React.useRef();
+  const [isPopup, setIsPopup] = React.useState<boolean>(false);
+  const popup = React.useRef<HTMLDivElement>(null);
 
-  function onChangeSort(obj) {
+  function onChangeSort(obj: SortItem) {
     setIsPopup(false);
     dispatch(setSort(obj));
   }
 
   React.useEffect(() => {
-    const handleClick = (e) => {
-      const path = e.composedPath();
+    const handleClick = (event: any) => {
+      const path = event.composedPath();
       if (!path.includes(popup.current)) {
         setIsPopup(false);
       }

@@ -1,30 +1,47 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { addItem, selectCart } from "../../redux/slices/cartSlice";
+import { TypeCart, addItem, selectCart } from "../../redux/slices/cartSlice";
 
 import { Link } from "react-router-dom";
 
 import styles from "./PizzaBlock.module.scss";
 
-function PizzaBlock({ id, imageUrl, title, types, sizes, price }) {
+type PizzaBlockProps = {
+  id: string;
+  imageUrl: string;
+  title: string;
+  types: number[];
+  sizes: number[];
+  price: number;
+};
+
+const PizzaBlock: React.FC<PizzaBlockProps> = ({
+  id,
+  imageUrl,
+  title,
+  types,
+  sizes,
+  price,
+}) => {
   const dispath = useDispatch();
   const { items } = useSelector(selectCart);
 
-  const [typeIndex, setTypeIndex] = React.useState(0);
-  const [sizeIndex, setSizeIndex] = React.useState(0);
+  const [typeIndex, setTypeIndex] = React.useState<number>(0);
+  const [sizeIndex, setSizeIndex] = React.useState<number>(0);
 
   const typeNames = ["тонкое", "традиционное"];
 
   const currectCount = items.find((item) => item.id === id);
 
   const onAddItem = () => {
-    const item = {
+    const item: TypeCart = {
       id,
       title,
       price,
       imageUrl,
       types: typeNames[typeIndex],
       sizes: sizes[sizeIndex],
+      count: 0,
     };
     dispath(addItem(item));
   };
@@ -87,6 +104,6 @@ function PizzaBlock({ id, imageUrl, title, types, sizes, price }) {
       </div>
     </div>
   );
-}
+};
 
 export default PizzaBlock;

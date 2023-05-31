@@ -3,7 +3,7 @@ import qs from "qs";
 import { useNavigate } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
-import { setCategory, setFilters } from "../redux/slices/filterSlice";
+import { IFilter, setCategory, setFilters } from "../redux/slices/filterSlice";
 import { fetchPizzas } from "../redux/slices/pizzaSlice";
 
 import Categories from "../components/Categories";
@@ -12,20 +12,21 @@ import PizzaBlock from "../components/PizzaBlock";
 import Sceleton from "../components/PizzaBlock/Sceleton";
 import PaginationPanel from "../components/PaginationPanel";
 import NotFoundPizza from "../components/NotFoundPizza";
+import { RootState } from "../redux/store";
 
-function Home() {
+const Home: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { data, status } = useSelector((state) => state.pizza);
+  const { data, status } = useSelector((state: any) => state.pizza);
   const { category, sort, currentPage, inputSearch } = useSelector(
-    (state) => state.filter
+    (state: RootState) => state.filter
   );
 
   const isSearch = React.useRef(false);
   const isMounted = React.useRef(false);
 
-  const onChangeCategory = (id) => {
+  const onChangeCategory = (id: number) => {
     dispatch(setCategory(id));
   };
 
@@ -35,6 +36,7 @@ function Home() {
     const sortBy = sort.sortProperty.replace("-", "");
     const order = sort.sortProperty.includes("-") ? "desc" : "asc";
 
+    // @ts-ignore
     dispatch(fetchPizzas({ categoryType, search, sortBy, order, currentPage }));
   };
   React.useEffect(() => {
@@ -62,7 +64,7 @@ function Home() {
         setFilters({
           ...params,
           sort,
-        })
+        } as IFilter)
       );
       isSearch.current = true;
     }
@@ -89,12 +91,12 @@ function Home() {
         ) : status !== "success" ? (
           [...new Array(8)].map((_, i) => <Sceleton key={i} />)
         ) : (
-          data.map((data) => <PizzaBlock key={data.id} {...data} />)
+          data.map((data: any) => <PizzaBlock key={data.id} {...data} />)
         )}
       </div>
       <PaginationPanel />
     </>
   );
-}
+};
 
 export default Home;

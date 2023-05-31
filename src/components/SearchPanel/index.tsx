@@ -10,26 +10,26 @@ import styles from "./SearchPanel.module.scss";
 import searchIcon from "../../assets/img/search-icon.svg";
 import closeIcon from "../../assets/img/closeIcon.svg";
 
-function SearchPanel() {
+const SearchPanel: React.FC = () => {
   const dispatch = useDispatch();
 
-  const [value, setValue] = React.useState("");
-  const inputRef = React.useRef("");
+  const [value, setValue] = React.useState<string>("");
+  const inputRef = React.useRef<HTMLInputElement>(null);
 
   const changeSearchInput = () => {
     dispatch(setInputSearch(""));
     setValue("");
-    inputRef.current.focus();
+    inputRef.current?.focus();
   };
 
   const updateChangeInput = React.useCallback(
-    debounce((value) => {
+    debounce((value: string) => {
       dispatch(setInputSearch(value));
     }, 250),
     []
   );
 
-  const onChangeInput = (event) => {
+  const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
     updateChangeInput(event.target.value);
   };
@@ -55,6 +55,6 @@ function SearchPanel() {
       )}
     </div>
   );
-}
+};
 
 export default SearchPanel;

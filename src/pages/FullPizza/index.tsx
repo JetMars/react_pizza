@@ -5,10 +5,17 @@ import axios from "axios";
 import PizzaBlock from "../../components/PizzaBlock";
 import styles from "./FullPizza.module.scss";
 
-function FullPizza() {
+const FullPizza: React.FC = () => {
   const { id } = useParams();
 
-  const [data, setData] = React.useState();
+  const [data, setData] = React.useState<{
+    id: string;
+    imageUrl: string;
+    title: string;
+    types: number[];
+    sizes: number[];
+    price: number;
+  }>();
 
   React.useEffect(() => {
     axios
@@ -26,6 +33,6 @@ function FullPizza() {
       <PizzaBlock {...data} />
     </div>
   );
-}
+};
 
 export default FullPizza;
