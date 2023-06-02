@@ -9,7 +9,10 @@ import imageLogo from "../../assets/img/pizza-logo.svg";
 import SearchPanel from "../SearchPanel/index";
 import { selectCart } from "../../redux/slices/cartSlice";
 
+import { useLocation } from "react-router-dom";
+
 const Header = () => {
+  const location = useLocation();
   const { items, totalPrice } = useSelector(selectCart);
   const totalCount = items.reduce(
     (counter: number, item) => (counter += item.count),
@@ -26,7 +29,7 @@ const Header = () => {
             <p>самая вкусная пицца во вселенной</p>
           </div>
         </Link>
-        <SearchPanel />
+        {location.pathname !== "/cart" && <SearchPanel />}
         <div className={styles.cart}>
           <Link to="cart" className="button button--cart">
             <span>{totalPrice} руб</span>

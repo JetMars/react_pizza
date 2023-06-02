@@ -1,7 +1,7 @@
 import axios from "axios";
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 
-type TypePizza = {
+export type TypePizza = {
   id: string;
   title: string;
   price: number;
@@ -20,22 +20,30 @@ const initialState: IPizza = {
   data: [],
 };
 
-export const fetchPizzas = createAsyncThunk<
-  TypePizza[],
-  Record<string, string>
->("pizza/fetchPizzaStatus", async (params, thunkAPI) => {
-  const { categoryType, search, sortBy, order, currentPage } = params;
+export type TypeFetchPizzas = {
+  categoryType: string;
+  search: string;
+  sortBy: string;
+  order: string;
+  currentPage: number;
+};
 
-  const { data } = await axios.get<TypePizza[]>(
-    `https://6446573fee791e1e29fc6cd1.mockapi.io/items?page=${currentPage}&limit=6${categoryType}&sortBy=${sortBy}&order=${order}${search}`
-  );
+export const fetchPizzas = createAsyncThunk<TypePizza[], TypeFetchPizzas>(
+  "pizza/fetchPizzaStatus",
+  async (params, thunkAPI) => {
+    const { categoryType, search, sortBy, order, currentPage } = params;
 
-  if (data.length === 0) {
-    return thunkAPI.rejectWithValue("Ошибка");
+    const { data } = await axios.get<TypePizza[]>(
+      `https://6446573fee791e1e29fc6cd1.mockapi.io/items?page=${currentPage}&limit=6${categoryType}&sortBy=${sortBy}&order=${order}${search}`
+    );
+
+    if (data.length === 0) {
+      return thunkAPI.rejectWithValue("Ошибка");
+    }
+
+    return thunkAPI.fulfillWithValue(data);
   }
-
-  return thunkAPI.fulfillWithValue(data);
-});
+);
 
 export const pizzaSlice = createSlice({
   name: "pizza",

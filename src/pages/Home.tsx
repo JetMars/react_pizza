@@ -2,7 +2,7 @@ import React from "react";
 import qs from "qs";
 import { useNavigate } from "react-router-dom";
 
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { IFilter, setCategory, setFilters } from "../redux/slices/filterSlice";
 import { fetchPizzas } from "../redux/slices/pizzaSlice";
 
@@ -12,11 +12,11 @@ import PizzaBlock from "../components/PizzaBlock";
 import Sceleton from "../components/PizzaBlock/Sceleton";
 import PaginationPanel from "../components/PaginationPanel";
 import NotFoundPizza from "../components/NotFoundPizza";
-import { RootState } from "../redux/store";
+import { RootState, useAppDispatch } from "../redux/store";
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const { data, status } = useSelector((state: any) => state.pizza);
   const { category, sort, currentPage, inputSearch } = useSelector(
@@ -26,9 +26,9 @@ const Home: React.FC = () => {
   const isSearch = React.useRef(false);
   const isMounted = React.useRef(false);
 
-  const onChangeCategory = (id: number) => {
+  const onChangeCategory = React.useCallback((id: number) => {
     dispatch(setCategory(id));
-  };
+  }, []);
 
   const getPizzas = () => {
     const categoryType = category ? `&category=${category}` : "";
@@ -36,7 +36,6 @@ const Home: React.FC = () => {
     const sortBy = sort.sortProperty.replace("-", "");
     const order = sort.sortProperty.includes("-") ? "desc" : "asc";
 
-    // @ts-ignore
     dispatch(fetchPizzas({ categoryType, search, sortBy, order, currentPage }));
   };
   React.useEffect(() => {
